@@ -16,6 +16,16 @@ resource "azurerm_subnet" "web" {
   resource_group_name  = azurerm_resource_group.main.name
   virtual_network_name = azurerm_virtual_network.main.name
   address_prefixes     = var.web_subnet_address_prefixes
+
+  delegation {
+    name = "web_server_farm_delegation"
+    service_delegation {
+      name = "Microsoft.Web/serverFarms"
+      actions = [
+        "Microsoft.Network/virtualNetworks/subnets/action"
+      ]
+    }
+  }
 }
 
 resource "azurerm_subnet" "pe" {

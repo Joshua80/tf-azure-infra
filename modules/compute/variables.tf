@@ -41,3 +41,9 @@ variable "app_settings" {
   type        = map(string)
   default     = {}
 }
+
+variable "app_service_subnet_id" {
+  description = "The ID of the subnet to which the App Service will be connected"
+  type        = string
+  
+}

@@ -30,6 +30,7 @@ module "compute" {
   webapp_name         = var.webapp_name
   always_on           = var.always_on
   app_settings        = var.app_settings
+  app_service_subnet_id = module.networking.web_subnet_id
 }
 
 module "database" {

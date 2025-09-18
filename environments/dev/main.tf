@@ -48,14 +48,15 @@ module "storage" {
 }
 
 module "compute" {
-  depends_on          = [module.storage]
-  source              = "../../modules/compute"
-  resource_group_name = var.resource_group_name
-  location            = var.location
-  service_plan_name   = var.service_plan_name
-  app_service_sku     = var.app_service_sku
-  os_type             = var.os_type
-  webapp_name         = var.webapp_name
-  always_on           = var.always_on
-  app_settings        = var.app_settings
+  depends_on            = [module.storage]
+  source                = "../../modules/compute"
+  resource_group_name   = var.resource_group_name
+  location              = var.location
+  service_plan_name     = var.service_plan_name
+  app_service_sku       = var.app_service_sku
+  os_type               = var.os_type
+  webapp_name           = var.webapp_name
+  always_on             = var.always_on
+  app_settings          = var.app_settings
+  app_service_subnet_id = module.networking.web_subnet_id
 }

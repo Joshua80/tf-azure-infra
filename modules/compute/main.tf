@@ -16,4 +16,5 @@ resource "azurerm_windows_web_app" "web" {
     always_on = var.always_on
   }
   app_settings = var.app_settings
+  virtual_network_subnet_id = var.app_service_subnet_id
 }

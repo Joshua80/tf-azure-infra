@@ -16,7 +16,7 @@ resource "azurerm_private_endpoint" "storage_pe" {
   name                = "pe-${var.storage_account_name}"
   resource_group_name = var.resource_group_name
   location            = var.location
-  subnet_id = var.subnet_id
+  subnet_id           = var.subnet_id
 
   private_service_connection {
     name                           = "pe-${var.storage_account_name}-connection"

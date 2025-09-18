@@ -10,9 +10,9 @@ resource "azurerm_mssql_server" "main" {
 }
 
 resource "azurerm_mssql_database" "main" {
-  name                = var.sql_database_name
-  server_id           = azurerm_mssql_server.main.id
-  sku_name            = var.sku_name
+  name      = var.sql_database_name
+  server_id = azurerm_mssql_server.main.id
+  sku_name  = var.sku_name
 }
 
 resource "azurerm_private_endpoint" "sql_pe" {
@@ -27,5 +27,5 @@ resource "azurerm_private_endpoint" "sql_pe" {
     is_manual_connection           = false
     subresource_names              = ["sqlServer"]
   }
-  
+
 }

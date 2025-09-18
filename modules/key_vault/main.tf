@@ -12,7 +12,7 @@ resource "azurerm_key_vault_secret" "sql_username" {
   name         = "sqlAdminUsername"
   value        = "sqladminuser"
   key_vault_id = azurerm_key_vault.kv.id
-  
+
 }
 
 resource "random_password" "name" {
@@ -24,6 +24,6 @@ resource "azurerm_key_vault_secret" "sql_password" {
   name         = "sqlAdminPassword"
   value        = random_password.name.result
   key_vault_id = azurerm_key_vault.kv.id
-  
+
 }
 

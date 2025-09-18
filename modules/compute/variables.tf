@@ -45,5 +45,5 @@ variable "app_settings" {
 variable "app_service_subnet_id" {
   description = "The ID of the subnet to which the App Service will be connected"
   type        = string
-  
+
 }

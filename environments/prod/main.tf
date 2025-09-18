@@ -12,6 +12,14 @@ module "networking" {
 
 }
 
+module "key_vault" {
+  depends_on          = [module.networking]
+  source              = "../../modules/key_vault"
+  resource_group_name = var.resource_group_name
+  location            = var.location
+  key_vault_name      = var.kv_name
+}
+
 module "compute" {
   source = "../../modules/compute"
   resource_group_name = var.resource_group_name

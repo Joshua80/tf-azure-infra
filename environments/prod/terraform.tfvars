@@ -8,6 +8,11 @@ web_subnet_address_prefixes = ["10.1.1.0/24"]
 pe_subnet_name = "pe-subnet"
 pe_subnet_address_prefixes = ["10.1.2.0/24"]
 
+
+##key vault
+kv_name = "kv-prod-webapp"
+
+
 # Compute
 service_plan_name = "plan-prod-webapp"
 os_type = "Linux"

@@ -8,14 +8,7 @@ resource "azurerm_storage_account" "main" {
 
 resource "azurerm_storage_container" "static" {
   name                  = var.container_name
-  storage_account_name  = azurerm_storage_account.main.name
+  storage_account_id    = azurerm_storage_account.main.id
   container_access_type = var.container_access_type
 }
 
-output "storage_account_name" {
-  value = azurerm_storage_account.main.name
-}
-
-output "static_container_name" {
-  value = azurerm_storage_container.static.name
-}

@@ -5,8 +5,8 @@ vnet_name = "vnet-prod-webapp"
 vnet_address_space = ["10.1.0.0/16"]
 web_subnet_name = "web-subnet"
 web_subnet_address_prefixes = ["10.1.1.0/24"]
-db_subnet_name = "db-subnet"
-db_subnet_address_prefixes = ["10.1.2.0/24"]
+pe_subnet_name = "pe-subnet"
+pe_subnet_address_prefixes = ["10.1.2.0/24"]
 
 # Compute
 service_plan_name = "plan-prod-webapp"
@@ -24,7 +24,7 @@ sql_version = "12.0"
 administrator_login = "sqladminuser"
 administrator_login_password = "ChangeMeProd!234"
 minimum_tls_version = "1.2"
-sql_database_name = "sqldb-prod-webapp"
+sql_database_name = "sqlpe-prod-webapp"
 sku_name = "S0"
 
 # Storage

@@ -7,8 +7,9 @@ module "networking" {
   vnet_address_space           = var.vnet_address_space
   web_subnet_name              = var.web_subnet_name
   web_subnet_address_prefixes  = var.web_subnet_address_prefixes
-  db_subnet_name               = var.db_subnet_name
-  db_subnet_address_prefixes   = var.db_subnet_address_prefixes
+  pe_subnet_name               = var.pe_subnet_name
+  pe_subnet_address_prefixes   = var.pe_subnet_address_prefixes
+
 }
 
 module "compute" {
@@ -34,6 +35,7 @@ module "database" {
   minimum_tls_version          = var.minimum_tls_version
   sql_database_name            = var.sql_database_name
   sku_name                     = var.sku_name
+  subnet_id                    = module.networking.pe_subnet_id
 }
 
 module "storage" {
@@ -45,4 +47,5 @@ module "storage" {
   account_replication_type= var.account_replication_type
   container_name          = var.container_name
   container_access_type   = var.container_access_type
+  subnet_id               = module.networking.pe_subnet_id
 }

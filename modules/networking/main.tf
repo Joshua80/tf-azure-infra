@@ -18,9 +18,9 @@ resource "azurerm_subnet" "web" {
   address_prefixes     = var.web_subnet_address_prefixes
 }
 
-resource "azurerm_subnet" "db" {
-  name                 = var.db_subnet_name
+resource "azurerm_subnet" "pe" {
+  name                 = var.pe_subnet_name
   resource_group_name  = azurerm_resource_group.main.name
   virtual_network_name = azurerm_virtual_network.main.name
-  address_prefixes     = var.db_subnet_address_prefixes
+  address_prefixes     = var.pe_subnet_address_prefixes
 }

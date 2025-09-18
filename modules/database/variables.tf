@@ -46,3 +46,8 @@ variable "sku_name" {
   type        = string
   default     = "S0"
 }
+
+variable "subnet_id" {
+  description = "The ID of the subnet to which the private endpoint will be connected"
+  type        = string
+}

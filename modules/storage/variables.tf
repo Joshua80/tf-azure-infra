@@ -36,3 +36,8 @@ variable "container_access_type" {
   type        = string
   default     = "private"
 }
+
+variable "subnet_id" {
+  description = "The ID of the subnet to which the private endpoint will be connected"
+  type        = string
+}

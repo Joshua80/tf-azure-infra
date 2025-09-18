@@ -5,8 +5,8 @@ vnet_name = "vnet-dev-webapp"
 vnet_address_space = ["10.0.0.0/16"]
 web_subnet_name = "web-subnet"
 web_subnet_address_prefixes = ["10.0.1.0/24"]
-db_subnet_name = "db-subnet"
-db_subnet_address_prefixes = ["10.0.2.0/24"]
+pe_subnet_name = "pe-subnet"
+pe_subnet_address_prefixes = ["10.0.2.0/24"]
 
 # Compute
 service_plan_name = "plan-dev-webapp"

@@ -28,12 +28,12 @@ variable "web_subnet_address_prefixes" {
   type        = list(string)
 }
 
-variable "db_subnet_name" {
+variable "pe_subnet_name" {
   description = "Name of the database subnet"
   type        = string
 }
 
-variable "db_subnet_address_prefixes" {
-  description = "Address prefixes for the database subnet"
+variable "pe_subnet_address_prefixes" {
+  description = "Address prefixes for the private endpoint subnet"
   type        = list(string)
 }

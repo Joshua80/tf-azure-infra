@@ -4,8 +4,8 @@ variable "vnet_name" {}
 variable "vnet_address_space" {}
 variable "web_subnet_name" {}
 variable "web_subnet_address_prefixes" {}
-variable "db_subnet_name" {}
-variable "db_subnet_address_prefixes" {}
+variable "pe_subnet_name" {}
+variable "pe_subnet_address_prefixes" {}
 variable "service_plan_name" {}
 variable "app_service_sku" {}
 variable "os_type" {}

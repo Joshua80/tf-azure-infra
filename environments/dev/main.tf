@@ -12,6 +12,7 @@ module "networking" {
 }
 
 module "compute" {
+  depends_on = [ module.networking ]
   source = "../../modules/compute"
   resource_group_name = var.resource_group_name
   location            = var.location
@@ -24,6 +25,7 @@ module "compute" {
 }
 
 module "database" {
+  depends_on = [ module.networking, module.compute ]
   source = "../../modules/database"
   resource_group_name           = var.resource_group_name
   location                     = var.location
@@ -37,6 +39,7 @@ module "database" {
 }
 
 module "storage" {
+  depends_on = [ module.database ]
   source                  = "../../modules/storage"
   resource_group_name     = var.resource_group_name
   location                = var.location

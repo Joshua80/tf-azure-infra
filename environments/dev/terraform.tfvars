@@ -10,7 +10,7 @@ db_subnet_address_prefixes = ["10.0.2.0/24"]
 
 # Compute
 service_plan_name = "plan-dev-webapp"
-os_type = "Linux"
+os_type = "Windows"
 app_service_sku = "B1"
 webapp_name = "webapp-dev"
 always_on = true

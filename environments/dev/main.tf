@@ -11,21 +11,8 @@ module "networking" {
   db_subnet_address_prefixes   = var.db_subnet_address_prefixes
 }
 
-module "compute" {
-  depends_on = [ module.networking ]
-  source = "../../modules/compute"
-  resource_group_name = var.resource_group_name
-  location            = var.location
-  service_plan_name   = var.service_plan_name
-  app_service_sku     = var.app_service_sku
-  os_type             = var.os_type
-  webapp_name         = var.webapp_name
-  always_on           = var.always_on
-  app_settings        = var.app_settings
-}
-
 module "database" {
-  depends_on = [ module.networking, module.compute ]
+  depends_on = [ module.networking ]
   source = "../../modules/database"
   resource_group_name           = var.resource_group_name
   location                     = var.location
@@ -39,7 +26,7 @@ module "database" {
 }
 
 module "storage" {
-  depends_on = [ module.database ]
+  depends_on = [ module.networking ]
   source                  = "../../modules/storage"
   resource_group_name     = var.resource_group_name
   location                = var.location
@@ -48,4 +35,17 @@ module "storage" {
   account_replication_type= var.account_replication_type
   container_name          = var.container_name
   container_access_type   = var.container_access_type
+}
+
+module "compute" {
+  depends_on = [ module.storage ]
+  source = "../../modules/compute"
+  resource_group_name = var.resource_group_name
+  location            = var.location
+  service_plan_name   = var.service_plan_name
+  app_service_sku     = var.app_service_sku
+  os_type             = var.os_type
+  webapp_name         = var.webapp_name
+  always_on           = var.always_on
+  app_settings        = var.app_settings
 }

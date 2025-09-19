@@ -6,6 +6,7 @@ resource "azurerm_key_vault" "kv" {
   resource_group_name = var.resource_group_name
   sku_name            = "standard"
   tenant_id           = data.azurerm_client_config.current.tenant_id
+  rbac_authorization_enabled = true
 }
 
 resource "azurerm_key_vault_secret" "sql_username" {

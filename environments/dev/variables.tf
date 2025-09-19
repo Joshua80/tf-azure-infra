@@ -25,3 +25,14 @@ variable "account_replication_type" {}
 variable "container_name" {}
 variable "container_access_type" {}
 variable "kv_name" {}
+
+
+variable "webapps" {
+  description = "Map of web app names to create"
+  type = map(object({
+    name         = string
+    always_on    = bool
+    app_settings = map(string)
+  }))
+  default = {}
+}

@@ -47,16 +47,24 @@ module "storage" {
   subnet_id                = module.networking.pe_subnet_id
 }
 
-module "compute" {
-  depends_on            = [module.storage]
-  source                = "../../modules/compute"
+module "app_service_plan" {
+  depends_on          = [module.networking]
+  source              = "../../modules/app_service_plan"
+  resource_group_name = var.resource_group_name
+  location            = var.location
+  service_plan_name   = var.service_plan_name
+  os_type             = var.os_type
+  app_service_sku     = var.app_service_sku
+}
+
+module "app_service" {
+  for_each              = var.webapps
+  source                = "../../modules/app_service"
   resource_group_name   = var.resource_group_name
   location              = var.location
-  service_plan_name     = var.service_plan_name
-  app_service_sku       = var.app_service_sku
-  os_type               = var.os_type
-  webapp_name           = var.webapp_name
-  always_on             = var.always_on
-  app_settings          = var.app_settings
+  app_service_plan_id   = module.app_service_plan.app_service_plan_id
+  webapp_name           = each.value.name
+  always_on             = each.value.always_on
+  app_settings          = each.value.app_settings
   app_service_subnet_id = module.networking.web_subnet_id
 }

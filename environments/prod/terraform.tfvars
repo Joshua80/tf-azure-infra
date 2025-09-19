@@ -17,17 +17,29 @@ kv_name = "kv-prod-webapp"
 service_plan_name = "plan-prod-webapp"
 os_type           = "Linux"
 app_service_sku   = "B1"
-webapp_name       = "webapp-prod"
-always_on         = true
-app_settings = {
-  WEBSITE_RUN_FROM_PACKAGE = "1"
+
+
+#### Web Apps
+webapps = {
+  "webapp1" = {
+    name         = "webapp1-prod-webapp-frontend"
+    always_on    = true
+    app_settings = {
+      "WEBSITE_RUN_FROM_PACKAGE" = "1"
+    }
+  }
+  "webapp2" = {
+    name         = "webapp2-prod-webapp-backend"
+    always_on    = true
+    app_settings = {
+      "WEBSITE_RUN_FROM_PACKAGE" = "1"
+    }
+  }
 }
 
 # Database
 sql_server_name              = "sql-prod-webapp"
 sql_version                  = "12.0"
-administrator_login          = "sqladminuser"
-administrator_login_password = "ChangeMeProd!234"
 minimum_tls_version          = "1.2"
 sql_database_name            = "sqlpe-prod-webapp"
 sku_name                     = "S0"

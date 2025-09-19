@@ -13,21 +13,33 @@ pe_subnet_address_prefixes  = ["10.0.2.0/24"]
 kv_name = "kv-dev-webapp"
 
 
-# Compute
+# App service plan
 service_plan_name = "plan-dev-webapp"
 os_type           = "Windows"
 app_service_sku   = "B1"
-webapp_name       = "webapp-dev"
-always_on         = true
-app_settings = {
-  WEBSITE_RUN_FROM_PACKAGE = "1"
+
+
+#### Web Apps
+webapps = {
+  "webapp1" = {
+    name         = "webapp1-dev-webapp-frontend"
+    always_on    = true
+    app_settings = {
+      "WEBSITE_RUN_FROM_PACKAGE" = "1"
+    }
+  }
+  "webapp2" = {
+    name         = "webapp2-dev-webapp-backend"
+    always_on    = true
+    app_settings = {
+      "WEBSITE_RUN_FROM_PACKAGE" = "1"
+    }
+  }
 }
 
 # Database
 sql_server_name              = "sql-dev-webapp"
 sql_version                  = "12.0"
-administrator_login          = "sqladminuser"
-administrator_login_password = "ChangeMe1234!"
 minimum_tls_version          = "1.2"
 sql_database_name            = "sqldb-dev-webapp"
 sku_name                     = "S0"

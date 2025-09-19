@@ -9,7 +9,6 @@ module "networking" {
   web_subnet_address_prefixes = var.web_subnet_address_prefixes
   pe_subnet_name              = var.pe_subnet_name
   pe_subnet_address_prefixes  = var.pe_subnet_address_prefixes
-
 }
 
 module "key_vault" {
@@ -20,20 +19,8 @@ module "key_vault" {
   key_vault_name      = var.kv_name
 }
 
-module "compute" {
-  source                = "../../modules/compute"
-  resource_group_name   = var.resource_group_name
-  location              = var.location
-  service_plan_name     = var.service_plan_name
-  app_service_sku       = var.app_service_sku
-  os_type               = var.os_type
-  webapp_name           = var.webapp_name
-  always_on             = var.always_on
-  app_settings          = var.app_settings
-  app_service_subnet_id = module.networking.web_subnet_id
-}
-
 module "database" {
+  depends_on                   = [module.networking]
   source                       = "../../modules/database"
   resource_group_name          = var.resource_group_name
   location                     = var.location
@@ -48,6 +35,7 @@ module "database" {
 }
 
 module "storage" {
+  depends_on               = [module.networking]
   source                   = "../../modules/storage"
   resource_group_name      = var.resource_group_name
   location                 = var.location
@@ -57,4 +45,26 @@ module "storage" {
   container_name           = var.container_name
   container_access_type    = var.container_access_type
   subnet_id                = module.networking.pe_subnet_id
+}
+
+module "app_service_plan" {
+  depends_on          = [module.networking]
+  source              = "../../modules/app_service_plan"
+  resource_group_name = var.resource_group_name
+  location            = var.location
+  service_plan_name   = var.service_plan_name
+  os_type             = var.os_type
+  app_service_sku     = var.app_service_sku
+}
+
+module "app_service" {
+  for_each              = var.webapps
+  source                = "../../modules/app_service"
+  resource_group_name   = var.resource_group_name
+  location              = var.location
+  app_service_plan_id   = module.app_service_plan.app_service_plan_id
+  webapp_name           = each.value.name
+  always_on             = each.value.always_on
+  app_settings          = each.value.app_settings
+  app_service_subnet_id = module.networking.web_subnet_id
 }

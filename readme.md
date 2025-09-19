@@ -221,5 +221,21 @@ This design enables teams to deploy secure, consistent, and scalable infrastruct
 - For sensitive values, consider using Azure Key Vault and Terraform secrets management.
 
 ---
+
+## Issues and Questions (Feedback Loop)
+
+Below is a running list of issues encountered and questions that arose during the development and deployment of this infrastructure. This section is intended to facilitate feedback, knowledge sharing, and continuous improvement.
+
+### Issues Encountered
+- 403 Forbidden error when accessing Key Vault secrets from Terraform (resolved by adding Key Vault Secrets User RBAC assignment to the Terraform principal).
+- Ensure correct Azure credentials and permissions are set for all resources and environments.
+- State file management: Use remote state for collaboration to avoid conflicts.
+- Provider version mismatches between environments causing unexpected errors.
+- Terraform plan/apply fails due to missing or misconfigured variables.
+- Delays in resource provisioning due to Azure API throttling or quota limits.
+
+_Please add more issues as you encounter them to help improve this project for everyone!_
+
+---
 **Author:** [Joshua ]
 

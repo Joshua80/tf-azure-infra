@@ -22,6 +22,98 @@ This repository contains reusable Terraform modules and environment configuratio
 	├── key_vault/
 	├── networking/
 	└── storage/
+## Terraform Azure Infrastructure
+
+This repository contains reusable Terraform modules and environment configurations for deploying Azure infrastructure. It is organized for easy management of multiple environments (dev, prod) and modular infrastructure components.
+
+### Project Structure
+
+```
+environments/
+	dev/
+		main.tf
+		provider.tf
+		terraform.tfvars
+		variables.tf
+	prod/
+		main.tf
+		provider.tf
+		terraform.tfvars
+		variables.tf
+modules/
+	app_service/
+		main.tf
+		outputs.tf
+		variables.tf
+	app_service_plan/
+		main.tf
+		outputs.tf
+		variables.tf
+	database/
+		main.tf
+		outputs.tf
+		variables.tf
+	key_vault/
+		main.tf
+		output.tf
+		variable.tf
+	networking/
+		main.tf
+		outputs.tf
+		variables.tf
+	storage/
+		main.tf
+		outputs.tf
+		variables.tf
+```
+
+### Environments
+
+- **dev/**: Development environment configuration
+- **prod/**: Production environment configuration
+
+Each environment contains its own `main.tf`, `provider.tf`, `terraform.tfvars`, and `variables.tf` for isolated deployments.
+
+### Modules
+
+- **app_service/**: Azure App Service resources
+- **app_service_plan/**: Azure App Service Plan resources
+- **database/**: Database resources (e.g., Azure SQL, PostgreSQL)
+- **key_vault/**: Azure Key Vault resources
+- **networking/**: Networking resources (VNet, subnets, etc.)
+- **storage/**: Azure Storage resources
+
+Each module is self-contained and reusable, with its own variables and outputs.
+
+### Usage
+
+1. **Install Terraform**: Ensure you have [Terraform](https://www.terraform.io/downloads.html) installed.
+2. **Configure Azure Credentials**: Authenticate with Azure CLI or set environment variables for service principal.
+3. **Select Environment**:
+	 ```
+	 cd environments/dev   # or environments/prod
+	 ```
+4. **Initialize Terraform**:
+	 ```
+	 terraform init
+	 ```
+5. **Plan and Apply**:
+	 ```
+	 terraform plan
+	 terraform apply
+	 ```
+
+### Customization
+
+Edit the `terraform.tfvars` and `variables.tf` files in each environment to customize resource parameters. Modules can be extended or reused as needed.
+
+### Notes
+
+- Follow best practices for managing secrets and state files.
+- Use remote state backends for team collaboration.
+
+---
+For more details, see the documentation in each module and environment folder.
 ```
 
 ## Setup Instructions

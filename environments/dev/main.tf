@@ -20,7 +20,7 @@ module "key_vault" {
 }
 
 module "database" {
-  depends_on                   = [module.networking]
+  depends_on                   = [module.key_vault]
   source                       = "../../modules/database"
   resource_group_name          = var.resource_group_name
   location                     = var.location
@@ -35,7 +35,7 @@ module "database" {
 }
 
 module "storage" {
-  depends_on               = [module.networking]
+  depends_on               = [module.key_vault]
   source                   = "../../modules/storage"
   resource_group_name      = var.resource_group_name
   location                 = var.location
@@ -48,7 +48,7 @@ module "storage" {
 }
 
 module "app_service_plan" {
-  depends_on          = [module.networking]
+  depends_on          = [module.storage]
   source              = "../../modules/app_service_plan"
   resource_group_name = var.resource_group_name
   location            = var.location
@@ -58,6 +58,7 @@ module "app_service_plan" {
 }
 
 module "app_service" {
+  depends_on = [ module.app_service_plan ]
   for_each              = var.webapps
   source                = "../../modules/app_service"
   resource_group_name   = var.resource_group_name

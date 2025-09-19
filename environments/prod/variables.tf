@@ -9,13 +9,8 @@ variable "pe_subnet_address_prefixes" {}
 variable "service_plan_name" {}
 variable "app_service_sku" {}
 variable "os_type" {}
-variable "webapp_name" {}
-variable "always_on" {}
-variable "app_settings" {}
 variable "sql_server_name" {}
 variable "sql_version" {}
-variable "administrator_login" {}
-variable "administrator_login_password" {}
 variable "minimum_tls_version" {}
 variable "sql_database_name" {}
 variable "sku_name" {}

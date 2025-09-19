@@ -26,8 +26,8 @@ module "database" {
   location                     = var.location
   sql_server_name              = var.sql_server_name
   sql_version                  = var.sql_version
-  administrator_login          = var.administrator_login
-  administrator_login_password = var.administrator_login_password
+  administrator_login          = module.key_vault.sql_username
+  administrator_login_password = module.key_vault.sql_password
   minimum_tls_version          = var.minimum_tls_version
   sql_database_name            = var.sql_database_name
   sku_name                     = var.sku_name

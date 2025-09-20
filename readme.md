@@ -106,6 +106,7 @@ For more details, see the documentation in each module and environment folder.
 - [Terraform](https://www.terraform.io/downloads.html) >= 1.0
 - Azure CLI (`az`) authenticated to your subscription
 - Sufficient permissions to create resources in the target Azure subscription
+- **Remote State Prerequisite:** The Azure Storage Account and Blob Container for the Terraform state file must be created before running `terraform init`. Ensure the storage account and container specified in your backend configuration exist.
 
 ### 1. Clone the Repository
 

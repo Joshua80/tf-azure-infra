@@ -1,3 +1,4 @@
+
 variable "app_service_plan_id" {
   description = "ID of the App Service plan"
   type        = string

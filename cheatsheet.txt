@@ -1,0 +1,39 @@
+# Azure App Service & Infra Cheatsheet
+
+---
+
+Q: What if the app goes down?
+A: Check Azure App Service diagnostics, review logs in Application Insights, and verify resource health in the Azure Portal. Set up alerts for downtime. Use deployment slots for safe rollbacks and consider scaling out for high availability.
+
+---
+
+Q: How do I set up a custom domain?
+A: In the Azure Portal, go to your App Service > Custom domains > Add custom domain. Verify domain ownership (via TXT or CNAME record), then map the domain. Update DNS records at your registrar. Optionally, enable HTTPS with App Service Managed Certificate.
+
+---
+
+Q: How do I enable IP forwarding?
+A: For App Service, IP forwarding is not natively supported. Use Azure Application Gateway or Azure Front Door in front of your app to forward client IPs via X-Forwarded-For headers. Ensure your app reads these headers for the real client IP.
+
+---
+
+Q: When should I use Azure App Service Environment (ASE)?
+A: Use ASE for high-security, fully isolated, and scalable hosting needs, such as when you require VNet integration, private IPs, or compliance with strict regulatory requirements. ASE is more expensive and complex than standard App Service plans.
+
+---
+
+Q: How do I set up costing and budget alerts?
+A: In the Azure Portal, go to Cost Management + Billing > Budgets. Create a budget for your subscription/resource group. Set up alerts to notify you when spending approaches or exceeds your budget.
+
+---
+
+Q: How do I handle app registration and Entra (Azure AD) groups?
+A: Register your app in Azure Active Directory (Entra ID) under App registrations. Assign required API permissions. Use Entra groups to manage user access and roles. Assign users/groups to app roles as needed for RBAC.
+
+---
+
+Q: How do I configure authentication from App Service to SQL and Storage Account?
+A: Use Managed Identity for your App Service. Enable system-assigned managed identity, then grant it the necessary roles:
+- For SQL: Assign the "Azure AD admin" in SQL Server, then grant the managed identity database access (e.g., db_datareader, db_datawriter).
+- For Storage: Assign the managed identity the "Storage Blob Data Contributor" role on the storage account.
+Use Azure AD authentication in your app's connection strings.

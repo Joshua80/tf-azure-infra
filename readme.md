@@ -17,54 +17,37 @@ This repository contains reusable Terraform modules and environment configuratio
 │       ├── terraform.tfvars
 │       └── variables.tf
 └── modules/
-	├── compute/
-	├── database/
-	├── key_vault/
-	├── networking/
-	└── storage/
-## Terraform Azure Infrastructure
-
-This repository contains reusable Terraform modules and environment configurations for deploying Azure infrastructure. It is organized for easy management of multiple environments (dev, prod) and modular infrastructure components.
-
-### Project Structure
-
-```
-environments/
-	dev/
-		main.tf
-		provider.tf
-		terraform.tfvars
-		variables.tf
-	prod/
-		main.tf
-		provider.tf
-		terraform.tfvars
-		variables.tf
-modules/
-	app_service/
-		main.tf
-		outputs.tf
-		variables.tf
-	app_service_plan/
-		main.tf
-		outputs.tf
-		variables.tf
-	database/
-		main.tf
-		outputs.tf
-		variables.tf
-	key_vault/
-		main.tf
-		output.tf
-		variable.tf
-	networking/
-		main.tf
-		outputs.tf
-		variables.tf
-	storage/
-		main.tf
-		outputs.tf
-		variables.tf
+    ├── app_service/
+    │   ├── main.tf
+    │   ├── outputs.tf
+    │   ├── readme.md
+    │   └── variables.tf
+    ├── app_service_plan/
+    │   ├── main.tf
+    │   ├── outputs.tf
+    │   ├── readme.md
+    │   └── variables.tf
+    ├── database/
+    │   ├── main.tf
+    │   ├── outputs.tf
+    │   ├── readme.md
+    │   └── variables.tf
+    ├── key_vault/
+    │   ├── main.tf
+    │   ├── output.tf
+    │   ├── rbac.tf
+    │   ├── readme.md
+    │   └── variable.tf
+    ├── networking/
+    │   ├── main.tf
+    │   ├── outputs.tf
+    │   ├── readme.md
+    │   └── variables.tf
+    └── storage/
+        ├── main.tf
+        ├── outputs.tf
+        ├── readme.md
+        └── variables.tf
 ```
 
 ### Environments

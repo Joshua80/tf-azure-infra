@@ -72,7 +72,6 @@ modules/
 - **dev/**: Development environment configuration
 - **prod/**: Production environment configuration
 
-
 Each environment contains its own `main.tf`, `provider.tf`, `terraform.tfvars`, and `variables.tf` for isolated deployments.
 
 ### Modules

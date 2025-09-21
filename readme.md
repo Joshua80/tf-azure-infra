@@ -168,35 +168,23 @@ To add new resources or modules:
 
 ## Architectural Reasoning
 
-This infrastructure is designed to provide a secure, scalable, and maintainable Azure environment for web applications, supporting multiple environments (dev, prod) and following Infrastructure-as-Code (IaC) best practices. The architecture is based on the following principles and choices:
+The architecture is designed for secure, scalable, and efficient web application hosting in Azure, as illustrated in the diagram above:
 
-- **Virtual Network with Segmented Subnets:**
-	- The use of a single Azure Virtual Network (VNet) with dedicated subnets for frontend, backend, and storage ensures network isolation and security boundaries between application tiers.
-	- Subnets (Frontend, Backend, Storage) allow for fine-grained network security rules and facilitate internal-only communication where needed (e.g., backend API, database access).
+- **Virtual Network (VNET):** All resources are deployed within a single Azure VNET to ensure network isolation and control.
 
-- **App Service (Frontend & Backend):**
-	- Azure App Service is chosen for both frontend and backend workloads due to its managed nature, built-in scaling, and integration with Azure DevOps and CI/CD pipelines.
-	- Deploying frontend and backend in separate subnets supports the principle of least privilege and allows for independent scaling and management.
+- **Web Subnet:** Hosts both the Frontend and Backend App Services. The Frontend App Service is exposed to the internet via HTTPS only, ensuring secure public access. Internal API calls between the Frontend and Backend App Services occur within the subnet, never leaving the VNET for improved security and performance.
 
-- **Azure SQL Database:**
-	- Provides a fully managed, scalable, and secure relational database service with built-in high availability and backup capabilities.
-	- Placed in the backend subnet to restrict access to only the backend App Service, reducing the attack surface.
+- **Private Endpoint (PE) Subnets:**
+  - **SQL Database:** The Backend App Service communicates with the SQL Database through a private endpoint in a dedicated PE subnet. This ensures that database traffic never traverses the public internet, reducing exposure and improving security.
+  - **Blob Storage:** Similarly, Blob Storage is accessed via a private endpoint in its own PE subnet, allowing secure, private connectivity from the app services to storage resources.
 
-- **Azure Blob Storage:**
-	- Used for static asset storage, such as images or documents, with secure access from the backend or directly from the frontend as needed.
-	- Isolated in its own subnet to control access and apply network security rules.
+- **Network Security:** By segmenting the network into subnets (Web, PE for SQL, PE for Storage), the design enforces least-privilege access and enables granular network security rules. Only necessary traffic is allowed between components, and all sensitive resources are shielded from direct internet exposure.
 
-- **Environment Configuration & IaC Automation:**
-	- All resources are provisioned and managed via Terraform, ensuring repeatability, version control, and easy environment replication.
-	- Environment variables and secrets are injected per environment, supporting secure and flexible deployments for dev, prod, or other stages.
+- **HTTPS-Only Access:** The architecture enforces HTTPS-only access from the internet to the Frontend App Service, protecting data in transit and meeting security best practices.
 
-**Patterns and Best Practices:**
-- Modular Terraform code for reusability and maintainability
-- Environment isolation for safe parallel development and production deployments
-- Principle of least privilege and network segmentation for security
-- Use of managed Azure services to reduce operational overhead
+- **Scalability & Maintainability:** The modular approach (separate subnets, private endpoints, and clear separation of frontend, backend, database, and storage) allows for independent scaling, easier troubleshooting, and future extensibility.
 
-This design enables teams to deploy secure, consistent, and scalable infrastructure across multiple environments with minimal manual intervention.
+This design ensures that all critical data flows (API calls, database access, storage access) remain private within Azure, while only the necessary entry point (Frontend App Service) is exposed to the public, and only over secure channels.
 
 ## Notes
 

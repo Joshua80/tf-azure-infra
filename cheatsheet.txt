@@ -1,39 +1,78 @@
-# Azure App Service & Infra Cheatsheet
+# Azure App Service & Infra Interview Q&A Cheatsheet
 
 ---
 
-Q: What if the app goes down?
-A: Check Azure App Service diagnostics, review logs in Application Insights, and verify resource health in the Azure Portal. Set up alerts for downtime. Use deployment slots for safe rollbacks and consider scaling out for high availability.
+Q: What would you do if the app goes down?
+A: First, I would check Azure App Service diagnostics and Application Insights logs to identify the root cause. I would verify resource health in the Azure Portal, review recent deployments, and check for platform or configuration issues. I would also ensure monitoring and alerts are in place to proactively detect downtime. If needed, I would use deployment slots to roll back to a previous stable version.
 
 ---
 
-Q: How do I set up a custom domain?
-A: In the Azure Portal, go to your App Service > Custom domains > Add custom domain. Verify domain ownership (via TXT or CNAME record), then map the domain. Update DNS records at your registrar. Optionally, enable HTTPS with App Service Managed Certificate.
+Q: How do you set up a custom domain for an App Service?
+A: I would go to the App Service in the Azure Portal, navigate to Custom domains, and add the desired domain. I would verify domain ownership using a TXT or CNAME record, then update DNS records at the registrar. Finally, I would enable HTTPS using an App Service Managed Certificate for secure access.
 
 ---
 
-Q: How do I enable IP forwarding?
-A: For App Service, IP forwarding is not natively supported. Use Azure Application Gateway or Azure Front Door in front of your app to forward client IPs via X-Forwarded-For headers. Ensure your app reads these headers for the real client IP.
+Q: How do you handle IP forwarding in Azure App Service?
+A: Native IP forwarding is not supported in App Service. To capture the original client IP, I would use Azure Application Gateway or Azure Front Door in front of the app, which forwards the client IP via the X-Forwarded-For header. The application should be configured to read this header for logging or security purposes.
 
 ---
 
-Q: When should I use Azure App Service Environment (ASE)?
-A: Use ASE for high-security, fully isolated, and scalable hosting needs, such as when you require VNet integration, private IPs, or compliance with strict regulatory requirements. ASE is more expensive and complex than standard App Service plans.
+Q: When would you use Azure App Service Environment (ASE)?
+A: I would use ASE for scenarios requiring high security, full network isolation, private IP addresses, or compliance with strict regulatory requirements. ASE is ideal for hosting apps that must not be exposed to the public internet and need VNet integration, but it comes with higher cost and complexity compared to standard App Service plans.
 
 ---
 
-Q: How do I set up costing and budget alerts?
-A: In the Azure Portal, go to Cost Management + Billing > Budgets. Create a budget for your subscription/resource group. Set up alerts to notify you when spending approaches or exceeds your budget.
+Q: How do you set up cost management and budget alerts in Azure?
+A: I would use Azure Cost Management + Billing to create budgets at the subscription or resource group level. I would set up alerts to notify stakeholders when spending approaches or exceeds the defined budget, helping to control costs and avoid surprises.
 
 ---
 
-Q: How do I handle app registration and Entra (Azure AD) groups?
-A: Register your app in Azure Active Directory (Entra ID) under App registrations. Assign required API permissions. Use Entra groups to manage user access and roles. Assign users/groups to app roles as needed for RBAC.
+Q: How do you handle app registration and Entra (Azure AD) groups?
+A: I would register the application in Azure Active Directory (Entra ID) under App registrations, configure required API permissions, and use Entra groups to manage user access and roles. Assigning users or groups to app roles enables RBAC and simplifies access management.
 
 ---
 
-Q: How do I configure authentication from App Service to SQL and Storage Account?
-A: Use Managed Identity for your App Service. Enable system-assigned managed identity, then grant it the necessary roles:
-- For SQL: Assign the "Azure AD admin" in SQL Server, then grant the managed identity database access (e.g., db_datareader, db_datawriter).
-- For Storage: Assign the managed identity the "Storage Blob Data Contributor" role on the storage account.
-Use Azure AD authentication in your app's connection strings.
+Q: How do you configure authentication from App Service to SQL Database and Storage Account?
+A: I would enable a system-assigned managed identity for the App Service. For SQL, I would assign the managed identity as an Azure AD user in the database and grant it the necessary roles. For Storage, I would assign the "Storage Blob Data Contributor" role to the managed identity. The app would use Azure AD authentication in its connection strings.
+
+---
+
+Q: How did you design the network architecture for this project?
+A: I designed the architecture with a single VNET containing multiple subnets: a web subnet for frontend and backend App Services, and private endpoint (PE) subnets for SQL Database and Blob Storage. Only the frontend app is exposed to the internet via HTTPS. All internal communication, including API calls and database/storage access, occurs over private endpoints, ensuring security and compliance.
+
+---
+
+Q: How do you manage secrets and sensitive configuration?
+A: I use Azure Key Vault to store secrets such as database credentials. Access is granted to the App Service via managed identity and RBAC. Secrets are never hardcoded in code or configuration files, and Key Vault access policies are tightly controlled.
+
+---
+
+Q: How do you ensure environment isolation and repeatability?
+A: Each environment (dev, prod) has its own directory with separate Terraform configuration and variable files. Modules are reused across environments, and remote state is used to avoid conflicts. This approach ensures safe, repeatable, and isolated deployments.
+
+---
+
+Q: What are some challenges you faced and how did you resolve them?
+A: I encountered issues with Key Vault permissions (403 errors), which I resolved by assigning the correct RBAC roles to the Terraform principal. I also addressed state file management by using remote state, and handled provider version mismatches by standardizing provider versions across environments.
+
+---
+
+Q: How do you handle monitoring and alerting for the application?
+A: I integrate Application Insights with the App Service for real-time monitoring, logging, and alerting. I set up alerts for key metrics such as availability, response time, and error rates, and configure dashboards for visibility.
+
+---
+
+Q: How do you manage costs and optimize resource usage?
+A: I use Azure Cost Management to monitor spending, set up budgets and alerts, and regularly review resource utilization. I right-size resources, use auto-scaling where possible, and deallocate unused resources to control costs.
+
+---
+
+Q: How do you approach disaster recovery and backups?
+A: I enable automated backups for databases and use geo-redundant storage for critical data. I document and test recovery procedures, and ensure that infrastructure can be redeployed quickly using Terraform in case of failure.
+
+---
+
+Q: How do you handle CI/CD for infrastructure and application deployments?
+A: I use pipelines (e.g., Azure DevOps, GitHub Actions) to automate Terraform plan/apply and application deployments. This ensures consistent, repeatable, and auditable changes across environments.
+
+---

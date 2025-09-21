@@ -172,7 +172,9 @@ The architecture is designed for secure, scalable, and efficient web application
 
 - **Virtual Network (VNET):** All resources are deployed within a single Azure VNET to ensure network isolation and control.
 
-- **Web Subnet:** Hosts both the Frontend and Backend App Services. The Frontend App Service is exposed to the internet via HTTPS only, ensuring secure public access. Internal API calls between the Frontend and Backend App Services occur within the subnet, never leaving the VNET for improved security and performance.
+- **Web Subnet:** Hosts both the Frontend and Backend App Services. The Frontend App Service is exposed to the internet via HTTPS only, ensuring secure public access. Internal API calls between the Frontend and Backend App Services occur within the subnet, never leaving the VNET for improved security and performance. 
+
+- **Application Insights:** Both the Frontend and Backend App Services are integrated with Azure Application Insights for monitoring, logging, and diagnostics. This enables real-time visibility into application health, performance, and usage, and supports proactive alerting and troubleshooting.
 
 - **Private Endpoint (PE) Subnets:**
   - **SQL Database:** The Backend App Service communicates with the SQL Database through a private endpoint in a dedicated PE subnet. This ensures that database traffic never traverses the public internet, reducing exposure and improving security.
@@ -182,9 +184,9 @@ The architecture is designed for secure, scalable, and efficient web application
 
 - **HTTPS-Only Access:** The architecture enforces HTTPS-only access from the internet to the Frontend App Service, protecting data in transit and meeting security best practices.
 
-- **Scalability & Maintainability:** The modular approach (separate subnets, private endpoints, and clear separation of frontend, backend, database, and storage) allows for independent scaling, easier troubleshooting, and future extensibility.
+- **Scalability & Maintainability:** The modular approach (separate subnets, private endpoints, Application Insights integration, and clear separation of frontend, backend, database, and storage) allows for independent scaling, easier troubleshooting, and future extensibility.
 
-This design ensures that all critical data flows (API calls, database access, storage access) remain private within Azure, while only the necessary entry point (Frontend App Service) is exposed to the public, and only over secure channels.
+This design ensures that all critical data flows (API calls, database access, storage access, and telemetry) remain private within Azure, while only the necessary entry point (Frontend App Service) is exposed to the public, and only over secure channels. Application Insights provides end-to-end observability for both frontend and backend services.
 
 ## Notes
 
